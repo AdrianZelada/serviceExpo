@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { alumno } from "./alumnos.model";
-import { HttpClient} from '@angular/common/http'; 
+import { HttpClient} from '@angular/common/http';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -9,39 +10,37 @@ import { HttpClient} from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ejemplo_bonito';
-    alumnos : Array <alumno> = [{          
-      nombre : "leo ",
-      edad : 25,
-      ciudad : "la paz",
-      estudiante : true
-    },
-    {
-      nombre : "mari",
-      edad : 0,
-      ciudad : "la paz",
-      estudiante : false,
-    },
-    {
-      nombre : "hipiie",
-      edad : 21111,
-      ciudad : "la paz ",
-      estudiante : true,
-    }
-  ];
+  nombre: String = '';
+  form: FormGroup;
 
-  users : any =[];
-  usersStaticos: any = [];
+  alumnos :Array<any> =[];
+  constructor(  private fb: FormBuilder, private http: HttpClient) {
+    this.form = this.fb.group({
+      name: new FormControl(),
+      email: new FormControl()
+    });
+
+     this.http.get('http://192.168.0.117:8090/users', {
+       headers: {
+         'Accept' : 'application/json',
+         'Access-Control-Allow-Origin' : '*'
+       }
+     }).subscribe((users: any) => {
+       console.log(users);
+     });
 
 
-  constructor( private http: HttpClient){
-    
-
-    this.users = this.usersStaticos;
-
-    // this.http.get('http://jsonplaceholder.typicode.com/users')
-    // .subscribe((data : any)=>{      
-    //   this.users= data;
-    // });
+    this.http.get('http://jsonplaceholder.typicode.com/users')
+    .subscribe((data : any)=>{
+      // this.users= data;
+      console.log(data);
+      this.alumnos = data;
+    });
   }
-};
+  guardar() {
+    console.log('datos');
+    const obj = this.form.getRawValue();
+    console.log(obj);
+    this.nombre = obj.name;
+  }
+}

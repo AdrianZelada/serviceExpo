@@ -1,22 +1,17 @@
-<!-- <h1>mi proyecto</h1>
-<h1>{{this.titulo}}</h1>
+<form action="" [formGroup]="form">
+  <label for="">Nombre: </label>
+  <input type="text" formControlName="name">
+  <br>
+  <label for="">email</label>
+  <input type="email" formControlName="email">
+  <button (click)="guardar()">Aceptar</button>
+</form>
 
-<ol>
-<li *ngFor='let alumno of alumnos'>
-  <h2>{{alumno.nombre}}</h2> 
-  <h1>{{alumno.edad}}</h1>
-</li>
-</ol> -->
-
-<div class="container" style="margin-top:100px">
-  <ul class="list-group">
-    <li *ngFor='let alumno of alumnos' class="list-group-item">{{alumno.nombre}} --- {{alumno.edad}}</li>
-  </ul>
-</div> 
+<h1> {{nombre}}</h1>
 
 
-<!-- <div class="container" style="margin-top:100px">
-  <ul class="list-group">
-    <li *ngFor="let item of users" class="list-group-item">{{item.name}}</li>
-  </ul>
-</div> -->
+<ul>
+  <li *ngFor="let alumno of alumnos">
+    {{alumno.name}}
+  </li>
+</ul>
